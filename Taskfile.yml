@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+tasks:
+  ci:
+    desc: Run CI tasks
+    cmds:
+      - task: fmt
+      - task: lint
+      - task: test
+      - task: build
+
+  build:
+    desc: Build the project
+    cmds:
+      - go build -o ./dist/clancy ./cmd/.
+
+  run:
+    desc: Run the project
+    deps:
+      - build
+    cmd: ./dist/clancy
+
+  fmt:
+    desc: Format project's code
+    cmd: go fmt ./...
+
+  test:
+    desc: Run all tests
+    cmd: go test -v ./...
+
+  lint:
+    desc: Run all linters
+    cmd: golangci-lint run

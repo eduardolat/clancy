@@ -52,7 +52,7 @@ input:
 
 	cfg, err := Load(tmpfile)
 	require.NoError(t, err)
-	require.Equal(t, "exact", cfg.Loop.StopMode)
+	require.Equal(t, "suffix", cfg.Loop.StopMode)
 }
 
 func TestDelayParsing(t *testing.T) {

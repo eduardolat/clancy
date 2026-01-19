@@ -55,7 +55,7 @@ func Load(path string) (*Config, error) {
 		cfg.Loop.MaxSteps = 10 // Default safety limit
 	}
 	if cfg.Loop.StopMode == "" {
-		cfg.Loop.StopMode = "exact"
+		cfg.Loop.StopMode = "suffix"
 	}
 	if cfg.Loop.Timeout == "" {
 		cfg.Loop.Timeout = "30m"

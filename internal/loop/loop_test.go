@@ -135,6 +135,13 @@ func TestCheckStopCondition(t *testing.T) {
 	require.True(t, CheckStopCondition("DONE", "DONE", "exact"))
 	require.True(t, CheckStopCondition("  DONE  \n", "DONE", "exact")) // Trimmed
 	require.False(t, CheckStopCondition("DONE.", "DONE", "exact"))
+
+	require.True(t, CheckStopCondition("Working on task... DONE", "DONE", "suffix"))
+	require.True(t, CheckStopCondition("  DONE  \n", "DONE", "suffix")) // Trimmed, also exact match
+	require.False(t, CheckStopCondition("DONE in the middle", "DONE", "suffix"))
+	require.False(t, CheckStopCondition("DONEX", "DONE", "suffix"))
+
+	require.True(t, CheckStopCondition("  thinking... DONE  \n", "DONE", "suffix")) // Trimmed + suffix
 }
 
 func TestRun_WithDelay(t *testing.T) {

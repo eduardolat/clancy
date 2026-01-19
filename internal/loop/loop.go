@@ -93,10 +93,17 @@ func Run(cfg *config.Config, r runner.AgentRunner, prompt string) error {
 
 // CheckStopCondition evaluates if the output meets the stop criteria.
 func CheckStopCondition(output, phrase, mode string) bool {
-	if mode == "exact" {
-		return strings.TrimSpace(output) == phrase
+	cleanOutput := strings.TrimSpace(output)
+
+	switch mode {
+	case "exact":
+		return cleanOutput == phrase
+	case "contains":
+		return strings.Contains(cleanOutput, phrase)
+	default:
+		// Default to "suffix"
+		return strings.HasSuffix(cleanOutput, phrase)
 	}
-	return strings.Contains(output, phrase)
 }
 
 // --- Visual Helpers (Box System) ---

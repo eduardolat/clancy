@@ -136,3 +136,34 @@ func TestCheckStopCondition(t *testing.T) {
 	require.True(t, CheckStopCondition("  DONE  \n", "DONE", "exact")) // Trimmed
 	require.False(t, CheckStopCondition("DONE.", "DONE", "exact"))
 }
+
+func TestRun_WithDelay(t *testing.T) {
+	// Scenario: Loop runs twice with a small delay.
+	cfg := &config.Config{
+		Agent: config.AgentConfig{Command: "cmd"},
+		Loop: config.LoopConfig{
+			MaxSteps:        2,
+			StopPhrase:      "DONE",
+			StopMode:        "exact",
+			TimeoutDuration: time.Minute,
+			Delay:           "100ms",
+			DelayDuration:   100 * time.Millisecond,
+		},
+	}
+
+	mockRunner := new(MockRunner)
+	// Call 1
+	mockRunner.On("Run", "cmd", cfg.Agent.Env).Return("working...", nil).Once()
+	// Call 2
+	mockRunner.On("Run", "cmd", cfg.Agent.Env).Return("DONE", nil).Once()
+
+	start := time.Now()
+	err := Run(cfg, mockRunner, "p")
+	duration := time.Since(start)
+
+	require.NoError(t, err)
+	mockRunner.AssertExpectations(t)
+
+	// Should have waited at least 100ms
+	require.GreaterOrEqual(t, duration, 100*time.Millisecond)
+}

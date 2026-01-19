@@ -9,6 +9,7 @@ import (
 	"github.com/eduardolat/clancy/internal/config"
 	"github.com/eduardolat/clancy/internal/loop"
 	"github.com/eduardolat/clancy/internal/runner"
+	"github.com/eduardolat/clancy/internal/version"
 	gonanoid "github.com/matoous/go-nanoid/v2"
 )
 
@@ -19,6 +20,15 @@ var templateContent []byte
 type Args struct {
 	Config string `arg:"positional" default:"clancy.yaml" help:"Path to configuration file"`
 	New    bool   `arg:"--new" help:"Generate a new configuration file"`
+}
+
+func (Args) Version() string {
+	return fmt.Sprintf("Version %s (commit: %s, date: %s)",
+		version.Version, version.Commit, version.Date)
+}
+
+func (Args) Description() string {
+	return "Clancy - AI Agent Loop Orchestrator"
 }
 
 func main() {

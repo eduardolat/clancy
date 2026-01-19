@@ -14,7 +14,7 @@ tasks:
   build:
     desc: Build the project
     cmds:
-      - go build -o ./dist/clancy ./cmd/.
+      - go build -o ./dist/clancy ./cmd/clancy/.
 
   run:
     desc: Run the project

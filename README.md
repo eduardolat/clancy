@@ -104,18 +104,18 @@ agent:
 
 loop:
   max_steps: 10 # Stop after 10 iterations
-  timeout: "30m" # Global timeout. Units: ns, us, ms, s, m, h
-  delay: "10s" # Optional wait time between iterations
+  timeout: "30m" # Global timeout. Units: s, m, h
+  delay: "10s" # Optional wait time between iterations. Units: s, m, h
   stop_phrase: "<promise>DONE</promise>" # The success signal
-  stop_mode: "exact" # "exact" or "contains"
+  stop_mode: "suffix" # Options: "exact", "contains", or "suffix"
 
 input:
   # Can be a string literal or "file:path/to/prompt.md"
   prompt: "file:./task.md"
 ```
 
-> **Tip:** For reliable stopping, explicitly instruct your LLM in the prompt to output the safe word only when finished. For example:
-> "Output `<promise>DONE</promise>` when complete without any explanation."
+> **Tip:** The default `suffix` mode works best when your LLM outputs reasoning or intermediate steps during the process. For reliable stopping, structure your prompt to guide the agent to place the stop phrase at the very end, after all work is complete. For example:
+> "Think through the problem step by step, and output `<promise>DONE</promise>` at the end when you're finished."
 
 ## Example Prompts
 

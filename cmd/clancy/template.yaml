@@ -11,11 +11,12 @@ agent:
     FOO: "bar"
 
 loop:
-  max_steps: 10 # Stop after 10 iterations
-  timeout: "30m" # Stop after 30 minutes
+  max_steps: 20 # Stop after 10 iterations
+  timeout: "60m" # Stop after 30 minutes
   stop_phrase: "<promise>DONE</promise>" # The success signal
   stop_mode: "exact" # "exact" or "contains"
+  # delay: "5s" # Wait time between iterations
 
 input:
   # Can be a string literal or "file:path/to/prompt.md"
-  prompt: "file:./tasks/task.md"
+  prompt: "file:./task.md"

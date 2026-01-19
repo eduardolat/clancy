@@ -115,6 +115,18 @@ input:
 > **Tip:** For reliable stopping, explicitly instruct your LLM in the prompt to output the safe word only when finished. For example:
 > "Output `<promise>DONE</promise>` when complete without any explanation."
 
+## Example Prompts
+
+The `prompts/` directory contains ready-to-use prompt templates for common automation tasks. These are generic examples that should be adapted to your project's specific needs. For more specialized use cases, create your own custom prompt.
+
+- **[coverage-hunter.md](prompts/coverage-hunter.md)** - Generate, execute, and verify unit tests to systematically increase test coverage
+- **[docs-syncer.md](prompts/docs-syncer.md)** - Synchronize documentation with actual source code across any language
+- **[i18n-extractor.md](prompts/i18n-extractor.md)** - Extract hardcoded strings and replace with localization keys for internationalization
+- **[inline-documenter.md](prompts/inline-documenter.md)** - Add standard inline documentation (JSDoc, GoDoc, PyDoc) to exported functions and classes
+- **[log-cleanup.md](prompts/log-cleanup.md)** - Remove debug print statements or upgrade to structured logging
+- **[refactor-auditor.md](prompts/refactor-auditor.md)** - Eliminate technical debt, fix linter errors, or perform code migrations safely
+- **[security-auditor.md](prompts/security-auditor.md)** - Detect and fix potential security vulnerabilities like hardcoded secrets
+
 ## Security & Best Practices
 
 ⚠️ **Important:** Clancy gives AI agents full autonomy to execute commands repeatedly until completion. For maximum safety and to take full advantage of this autonomy:

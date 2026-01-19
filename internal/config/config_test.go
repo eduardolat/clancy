@@ -38,6 +38,23 @@ input:
 	require.Equal(t, "Do work", cfg.Input.Prompt)
 }
 
+func TestDefaultStopMode(t *testing.T) {
+	content := `
+agent:
+  command: "echo"
+loop:
+  max_steps: 1
+input:
+  prompt: "foo"
+`
+	tmpfile := filepath.Join(t.TempDir(), "clancy_defaults.yaml")
+	require.NoError(t, os.WriteFile(tmpfile, []byte(content), 0644))
+
+	cfg, err := Load(tmpfile)
+	require.NoError(t, err)
+	require.Equal(t, "exact", cfg.Loop.StopMode)
+}
+
 func TestResolvePrompt_String(t *testing.T) {
 	cfg := &Config{
 		Input: InputConfig{Prompt: "Just a string"},

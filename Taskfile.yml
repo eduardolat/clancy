@@ -24,6 +24,10 @@ tasks:
       - task: test
       - task: build
 
+  deps:
+    desc: Install all dependencies for the project
+    cmd: go mod download
+
   build:
     desc: Build the project
     cmds:

@@ -5,4 +5,5 @@ temp/
 tmp/
 
 clancy
-clancy*.yaml
+clancy.yaml
+clancy-*.yaml

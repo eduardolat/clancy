@@ -92,7 +92,7 @@ agent:
   command: "opencode run '${PROMPT}'"
   env:
     # Optional environment variables
-    NO_COLOR: "true"
+    FOO: "bar"
 
 loop:
   max_steps: 10          # Stop after 10 iterations

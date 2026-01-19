@@ -4,6 +4,6 @@ out/
 temp/
 tmp/
 
-clancy
-clancy.yaml
-clancy-*.yaml
+/clancy
+/clancy.yaml
+/clancy-*.yaml

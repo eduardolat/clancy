@@ -28,6 +28,8 @@ type LoopConfig struct {
 	Timeout         string        `yaml:"timeout"`
 	StopPhrase      string        `yaml:"stop_phrase"`
 	StopMode        string        `yaml:"stop_mode"`
+	Delay           string        `yaml:"delay"`
+	DelayDuration   time.Duration `yaml:"-"` // Parsed duration
 	TimeoutDuration time.Duration `yaml:"-"` // Parsed duration
 }
 
@@ -65,6 +67,15 @@ func Load(path string) (*Config, error) {
 		return nil, fmt.Errorf("invalid timeout format: %w", err)
 	}
 	cfg.Loop.TimeoutDuration = duration
+
+	// Parse delay
+	if cfg.Loop.Delay != "" {
+		delay, err := time.ParseDuration(cfg.Loop.Delay)
+		if err != nil {
+			return nil, fmt.Errorf("invalid delay format: %w", err)
+		}
+		cfg.Loop.DelayDuration = delay
+	}
 
 	return &cfg, nil
 }

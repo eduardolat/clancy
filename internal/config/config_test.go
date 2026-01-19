@@ -55,6 +55,23 @@ input:
 	require.Equal(t, "exact", cfg.Loop.StopMode)
 }
 
+func TestDelayParsing(t *testing.T) {
+	content := `
+agent:
+  command: "echo"
+loop:
+  delay: "500ms"
+input:
+  prompt: "foo"
+`
+	tmpfile := filepath.Join(t.TempDir(), "clancy_delay.yaml")
+	require.NoError(t, os.WriteFile(tmpfile, []byte(content), 0644))
+
+	cfg, err := Load(tmpfile)
+	require.NoError(t, err)
+	require.Equal(t, 500*time.Millisecond, cfg.Loop.DelayDuration)
+}
+
 func TestResolvePrompt_String(t *testing.T) {
 	cfg := &Config{
 		Input: InputConfig{Prompt: "Just a string"},

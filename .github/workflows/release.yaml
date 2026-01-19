@@ -16,6 +16,10 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for git describe
 
+      - name: Create mount directories
+        run: |
+          mkdir -p ~/.claude ~/.config/opencode ~/.local/share/opencode
+
       - name: Run tests, lint and build
         uses: devcontainers/ci@v0.3
         with:

@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"os"
 
@@ -10,6 +11,9 @@ import (
 	"github.com/eduardolat/clancy/internal/runner"
 	gonanoid "github.com/matoous/go-nanoid/v2"
 )
+
+//go:embed template.yaml
+var templateContent []byte
 
 // Args defines command line arguments.
 type Args struct {
@@ -73,27 +77,7 @@ func generateConfig() error {
 		filename = fmt.Sprintf("clancy-%s.yaml", id)
 	}
 
-	content := `version: 1
-
-agent:
-  # The command to run. ${PROMPT} is replaced with the content from input.prompt.
-  # Note: Ensure usage of quotes compatible with your shell.
-  command: "opencode run '${PROMPT}'"
-  env:
-    # Optional environment variables
-    NO_COLOR: "true"
-
-loop:
-  max_steps: 10          # Stop after 10 iterations
-  timeout: "30m"         # Stop after 30 minutes
-  stop_phrase: "DONE"    # The success signal
-  stop_mode: "exact"     # "exact" or "contains"
-
-input:
-  # Can be a string literal or "file:path/to/prompt.md"
-  prompt: "file:./tasks/task.md"
-`
-	if err := os.WriteFile(filename, []byte(content), 0644); err != nil {
+	if err := os.WriteFile(filename, templateContent, 0644); err != nil {
 		return fmt.Errorf("failed to write file: %w", err)
 	}
 

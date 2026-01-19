@@ -167,8 +167,11 @@ When updating this document, do so with the context of the entire document in mi
 5. Exit with success (stop phrase found) or error (limits exceeded)
 
 ### Stop Phrase Modes
-- **exact**: Output must exactly match the stop phrase (after trimming whitespace)
-- **contains**: Output must contain the stop phrase anywhere (case-sensitive)
+- **exact**: Output must exactly match the stop phrase.
+- **contains**: Output must contain the stop phrase anywhere.
+- **suffix**: Output must **end** with the stop phrase. (Recommended for agents that "think" before acting).
+
+> **Note:** Clancy applies `strings.TrimSpace()` to the agent's output **before** any check in all modes.
 
 ### Safety Limits
 - `max_steps`: Maximum number of loop iterations (default: 10)

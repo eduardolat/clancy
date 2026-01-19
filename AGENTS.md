@@ -38,6 +38,8 @@ When updating this document, do so with the context of the entire document in mi
 ### CI/CD
 - **Full CI**: `task ci` - Runs format, lint, test, and build in sequence
 - **CI in GitHub Actions**: Uses devcontainers with `task ci` command
+- **Cross-Platform Build**: `task build-all` - Builds binaries for Linux (amd64/arm64), macOS (amd64/arm64), and Windows (amd64/arm64)
+- **Clean Artifacts**: `task clean` - Removes all build artifacts from dist/
 
 ## General Instructions
 
@@ -61,12 +63,14 @@ When updating this document, do so with the context of the entire document in mi
 ### Root Layout
 - `go.mod`: Go module definition and dependencies
 - `go.sum`: Go dependency checksums
-- `Taskfile.yml`: Task runner configuration (build, test, lint, format)
+- `Taskfile.yml`: Task runner configuration (build, test, lint, format, cross-platform builds)
+- `install.sh`: Installation script for downloading and installing pre-built binaries
 - `clancy`: Compiled binary (in git for distribution purposes)
 - `clancy*.yaml`: Configuration files (examples and generated configs)
 - `README.md`: User documentation and usage guide
 - `LICENSE`: MIT license
-- `.github/workflows/ci.yaml`: CI/CD pipeline configuration
+- `.github/workflows/ci.yaml`: CI/CD pipeline configuration using devcontainers
+- `.github/workflows/release.yaml`: Release workflow for publishing releases
 
 ### `cmd/clancy/` (Entry Point)
 - **Role**: Application entry point and CLI interface
@@ -94,12 +98,15 @@ When updating this document, do so with the context of the entire document in mi
     - `runner_unix.go`: Unix-specific execution with PTY support
     - `runner_windows.go`: Windows-specific execution via standard pipes
     - `runner_unix_test.go`: Unix runner tests
+  - `version/`: Version information populated at build time via ldflags
+    - `version.go`: Version, commit hash, and build date variables
 
 ### `dist/` (Build Artifacts)
 - **Role**: Compiled output directory
 - **Key Files**:
   - `clancy`: Built binary (target of `task build`)
-  - `Taskfile.yml`: Distribution-specific tasks (minimal)
+  - `clancy-{os}-{arch}`: Cross-platform binaries from `task build-all`
+  - `checksums.txt`: SHA256 checksums for all binaries
 
 ### `spec/` (Specifications)
 - **Role**: Project specifications and requirements (currently empty)

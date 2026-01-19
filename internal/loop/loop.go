@@ -18,7 +18,6 @@ const (
 	colorGreen  = "\033[32m"
 	colorYellow = "\033[33m"
 	colorRed    = "\033[31m"
-	colorBold   = "\033[1m"
 )
 
 // Run executes the Ralph loop based on the provided configuration.

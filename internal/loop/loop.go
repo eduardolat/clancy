@@ -115,7 +115,7 @@ func printSuccessBox(step int) {
 	g := colorGreen
 	r := colorReset
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", g, r)
-	_, _ = fmt.Fprintf(os.Stdout, "%s  ✅ CLANCY: SUCCESS! Stop phrase found in step %02d%s\n", g, step, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  ✅ CLANCY: Stop phrase found in step %02d%s\n", g, step, r)
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", g, r)
 }
 
@@ -123,7 +123,7 @@ func printRetryBox(step int) {
 	y := colorYellow
 	r := colorReset
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
-	_, _ = fmt.Fprintf(os.Stdout, "%s  🔄 CLANCY: Stop phrase NOT found in step %02d. Retrying...%s\n", y, step, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  🔄 CLANCY: Stop phrase NOT found in step %02d. Continuing...%s\n", y, step, r)
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
 }
 
@@ -135,7 +135,7 @@ func printErrorBox(err error) {
 	errStr := fmt.Sprintf("%.55s...", err.Error())
 
 	_, _ = fmt.Fprintf(os.Stderr, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", red, r)
-	_, _ = fmt.Fprintf(os.Stderr, "%s  💥 CLANCY: CRITICAL: Agent execution failed!%s\n", red, r)
+	_, _ = fmt.Fprintf(os.Stderr, "%s  💥 CLANCY: Agent execution failed!%s\n", red, r)
 	_, _ = fmt.Fprintf(os.Stderr, "%s  %v%s\n", red, errStr, r)
 	_, _ = fmt.Fprintf(os.Stderr, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", red, r)
 }
@@ -145,6 +145,6 @@ func printCooldownBox(delay string) {
 	r := colorReset
 	// Cooldown also uses the box style now
 	_, _ = fmt.Fprintf(os.Stdout, "\n%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
-	_, _ = fmt.Fprintf(os.Stdout, "%s  ⏳ CLANCY: COOLDOWN: Waiting %s before next step...%s\n", y, delay, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  ⏳ CLANCY: Waiting %s before next step...%s\n", y, delay, r)
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
 }

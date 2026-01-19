@@ -41,7 +41,9 @@
 
 ## Installation
 
-### Quick Install
+### Quick Script (recommended)
+
+You can also run this script to update to the latest version.
 
 ```bash
 curl -sfL https://raw.githubusercontent.com/eduardolat/clancy/main/install.sh | sh
@@ -100,13 +102,14 @@ agent:
 
 loop:
   max_steps: 10          # Stop after 10 iterations
-  timeout: "30m"         # Stop after 30 minutes
+  timeout: "30m"         # Global timeout. Units: ns, us, ms, s, m, h
+  delay: "10s"            # Optional wait time between iterations
   stop_phrase: "<promise>DONE</promise>" # The success signal
   stop_mode: "exact"     # "exact" or "contains"
 
 input:
   # Can be a string literal or "file:path/to/prompt.md"
-  prompt: "file:./tasks/refactor.md"
+  prompt: "file:./task.md"
 ```
 
 > **Tip:** For reliable stopping, explicitly instruct your LLM in the prompt to output the safe word only when finished. For example:

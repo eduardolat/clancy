@@ -11,6 +11,14 @@ tasks:
       - task: test
       - task: build
 
+  release:
+    desc: Create a release using GoReleaser
+    cmd: goreleaser release
+
+  release:local:
+    desc: Build a local release using GoReleaser
+    cmd: goreleaser release --snapshot --clean
+
   build:
     desc: Build the project
     cmds:

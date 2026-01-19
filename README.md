@@ -4,7 +4,9 @@
     <img align="center" src="./gopher.png" height="250px" width="auto">
   </p>
   <p align="center">
-    <b>Clancy</b> is a robust "Ralph Wiggum" loop orchestrator written in Go. It automates the execution of AI coding agents (like opencode, claude code, etc) by running them in a persistent loop until a specific success criteria is met or safety limits are reached.
+    <b>Clancy</b> (named after Chief Clancy Wiggum) is a robust <a href="https://awesomeclaude.ai/ralph-wiggum">"Ralph Wiggum"</a> loop orchestrator written in Go.
+    <br/>
+    It automates the execution of AI coding agents (like opencode, claude code, etc) by running them in a persistent loop until a specific success criteria is met or safety limits are reached.
   </p>
 </p>
 
@@ -109,6 +111,17 @@ input:
 
 > **Tip:** For reliable stopping, explicitly instruct your LLM in the prompt to output the safe word only when finished. For example:
 > "Output `<promise>DONE</promise>` when complete without any explanation."
+
+## Security & Best Practices
+
+⚠️ **Important:** Clancy gives AI agents full autonomy to execute commands repeatedly until completion. For maximum safety and to take full advantage of this autonomy:
+
+- **Run in Containers:** Execute Clancy inside Docker containers or similar isolated environments
+- **Controlled Environment:** Use dedicated development environments or VMs with proper resource limits
+- **Permission Management:** Grant agents the necessary permissions for your specific task (file system access, network, etc.) within the controlled boundary
+- **Data Safety:** Ensure no sensitive data or critical production systems are accessible from the agent's execution environment
+
+Running in a controlled, isolated environment allows you to confidently give agents full autonomy while keeping your host system safe.
 
 ## How it Works
 

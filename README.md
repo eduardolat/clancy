@@ -1,4 +1,29 @@
-# Clancy
+# Clancy Wiggum
+
+<img src="./gopher.png" height="250px" width="auto">
+
+<br/>
+
+<p>
+  <a href="https://github.com/eduardolat/clancy/actions">
+    <img src="https://github.com/eduardolat/clancy/actions/workflows/ci.yaml/badge.svg" alt="CI status"/>
+  </a>
+  <a href="https://pkg.go.dev/github.com/eduardolat/clancy">
+    <img src="https://pkg.go.dev/badge/github.com/eduardolat/clancy" alt="Go Reference"/>
+  </a>
+  <a href="https://goreportcard.com/report/eduardolat/clancy">
+    <img src="https://goreportcard.com/badge/eduardolat/clancy" alt="Go Report Card"/>
+  </a>
+  <a href="https://github.com/eduardolat/clancy/releases/latest">
+    <img src="https://img.shields.io/github/release/eduardolat/clancy.svg" alt="Release Version"/>
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/eduardolat/clancy.svg" alt="License"/>
+  </a>
+  <a href="https://github.com/eduardolat/clancy">
+    <img src="https://img.shields.io/github/stars/eduardolat/clancy?style=flat&label=github+stars"/>
+  </a>
+</p>
 
 **Clancy** is a robust "Ralph Wiggum" loop orchestrator written in Go. It automates the execution of AI coding agents (like `claude code`) by running them in a persistent loop until a specific success criteria is met or safety limits are reached.
 

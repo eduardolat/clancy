@@ -41,7 +41,7 @@
 
 ## Installation
 
-### Quick Script (recommended)
+### Quick Install Script (recommended)
 
 You can also run this script to update to the latest version.
 
@@ -72,9 +72,11 @@ go build -o clancy ./cmd/clancy
 ### Quick Start
 
 Generate a new configuration file:
+
 ```bash
 clancy --new
 ```
+
 This creates `clancy.yaml`. If the file exists, it creates `clancy-{unique-id}.yaml`.
 
 ### Running
@@ -101,11 +103,11 @@ agent:
     FOO: "bar"
 
 loop:
-  max_steps: 10          # Stop after 10 iterations
-  timeout: "30m"         # Global timeout. Units: ns, us, ms, s, m, h
-  delay: "10s"            # Optional wait time between iterations
+  max_steps: 10 # Stop after 10 iterations
+  timeout: "30m" # Global timeout. Units: ns, us, ms, s, m, h
+  delay: "10s" # Optional wait time between iterations
   stop_phrase: "<promise>DONE</promise>" # The success signal
-  stop_mode: "exact"     # "exact" or "contains"
+  stop_mode: "exact" # "exact" or "contains"
 
 input:
   # Can be a string literal or "file:path/to/prompt.md"

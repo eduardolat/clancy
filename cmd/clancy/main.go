@@ -81,6 +81,6 @@ func generateConfig() error {
 		return fmt.Errorf("failed to write file: %w", err)
 	}
 
-	fmt.Fprintf(os.Stdout, "Generated configuration file: %s\n", filename)
+	_, _ = fmt.Fprintf(os.Stdout, "New configuration file generated: %s\n", filename)
 	return nil
 }

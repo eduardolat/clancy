@@ -75,10 +75,8 @@ func Run(cfg *config.Config, r runner.AgentRunner, prompt string) error {
 			printRetryBox(i)
 
 			if cfg.Loop.DelayDuration > 0 {
-				// STATIC VISIBLE DELAY LOG (No animation)
-				// Bold Yellow text to make it pop
-				_, _ = fmt.Fprintf(os.Stdout, "\n%s%s⏳ COOLDOWN: Waiting %s before next step...%s\n",
-					colorBold, colorYellow, cfg.Loop.Delay, colorReset)
+				// COOLDOWN (Yellow Box)
+				printCooldownBox(cfg.Loop.Delay)
 
 				// Sleep with context check
 				select {
@@ -109,7 +107,7 @@ func printHeaderBox(step, total int) {
 	r := colorReset
 	// Heavy box style for high visibility
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", c, r)
-	_, _ = fmt.Fprintf(os.Stdout, "%s  🍩 CLANCY LOOP | STEP %02d/%02d%s\n", c, step, total, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  🍩 CLANCY: STEP %02d/%02d%s\n", c, step, total, r)
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", c, r)
 }
 
@@ -117,7 +115,7 @@ func printSuccessBox(step int) {
 	g := colorGreen
 	r := colorReset
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", g, r)
-	_, _ = fmt.Fprintf(os.Stdout, "%s  ✅ SUCCESS! Stop phrase found in step %02d%s\n", g, step, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  ✅ CLANCY: SUCCESS! Stop phrase found in step %02d%s\n", g, step, r)
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", g, r)
 }
 
@@ -125,7 +123,7 @@ func printRetryBox(step int) {
 	y := colorYellow
 	r := colorReset
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
-	_, _ = fmt.Fprintf(os.Stdout, "%s  🔄 Stop phrase NOT found in step %02d. Retrying...%s\n", y, step, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  🔄 CLANCY: Stop phrase NOT found in step %02d. Retrying...%s\n", y, step, r)
 	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
 }
 
@@ -137,7 +135,16 @@ func printErrorBox(err error) {
 	errStr := fmt.Sprintf("%.55s...", err.Error())
 
 	_, _ = fmt.Fprintf(os.Stderr, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", red, r)
-	_, _ = fmt.Fprintf(os.Stderr, "%s  💥 CRITICAL: Agent execution failed!%s\n", red, r)
+	_, _ = fmt.Fprintf(os.Stderr, "%s  💥 CLANCY: CRITICAL: Agent execution failed!%s\n", red, r)
 	_, _ = fmt.Fprintf(os.Stderr, "%s  %v%s\n", red, errStr, r)
 	_, _ = fmt.Fprintf(os.Stderr, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", red, r)
+}
+
+func printCooldownBox(delay string) {
+	y := colorYellow
+	r := colorReset
+	// Cooldown also uses the box style now
+	_, _ = fmt.Fprintf(os.Stdout, "\n%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s  ⏳ CLANCY: COOLDOWN: Waiting %s before next step...%s\n", y, delay, r)
+	_, _ = fmt.Fprintf(os.Stdout, "%s━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━%s\n", y, r)
 }

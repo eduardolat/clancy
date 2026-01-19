@@ -1,36 +1,39 @@
-# https://goreleaser.com/ci/actions/
-
-name: Release
+name: Release Build and Upload
 
 on:
-  pull_request:
-  push:
-    tags:
-      - "*"
-
-permissions:
-  contents: write
+  release:
+    types: [published]
 
 jobs:
-  goreleaser:
+  build-and-upload:
+    name: Build and Upload to Release
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Fetch all history for git describe
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Run tests, lint and build
+        uses: devcontainers/ci@v0.3
         with:
-          go-version: "1.25"
+          push: never
+          runCmd: |
+            task deps &&
+            task lint &&
+            task test &&
+            task build-all
 
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
         with:
-          distribution: goreleaser
-          # 'latest', 'nightly', or a semver
-          version: "~> v2"
-          args: release --clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            ./dist/clancy-linux-amd64
+            ./dist/clancy-linux-arm64
+            ./dist/clancy-darwin-amd64
+            ./dist/clancy-darwin-arm64
+            ./dist/clancy-windows-amd64.exe
+            ./dist/clancy-windows-arm64.exe
+            ./dist/checksums.txt

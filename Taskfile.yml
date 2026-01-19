@@ -2,6 +2,19 @@
 
 version: '3'
 
+vars:
+  VERSION:
+    sh: git describe --tags --abbrev=0 2>/dev/null || echo "dev"
+  COMMIT:
+    sh: git rev-parse --short HEAD 2>/dev/null || echo "unknown"
+  DATE:
+    sh: date -u +"%Y-%m-%dT%H:%M:%SZ"
+  LDFLAGS: >-
+    -s -w
+    -X github.com/eduardolat/clancy/internal/version.Version={{.VERSION}}
+    -X github.com/eduardolat/clancy/internal/version.Commit={{.COMMIT}}
+    -X github.com/eduardolat/clancy/internal/version.Date={{.DATE}}
+
 tasks:
   ci:
     desc: Run CI tasks
@@ -10,14 +23,6 @@ tasks:
       - task: lint
       - task: test
       - task: build
-
-  release:
-    desc: Create a release using GoReleaser
-    cmd: goreleaser release
-
-  release:local:
-    desc: Build a local release using GoReleaser
-    cmd: goreleaser release --snapshot --clean
 
   build:
     desc: Build the project
@@ -41,3 +46,59 @@ tasks:
   lint:
     desc: Run all linters
     cmd: golangci-lint run
+
+  # Cross-compilation targets for release builds
+  build-all:
+    desc: Build binaries for all supported platforms
+    cmds:
+      - task: build-linux-amd64
+      - task: build-linux-arm64
+      - task: build-darwin-amd64
+      - task: build-darwin-arm64
+      - task: build-windows-amd64
+      - task: build-windows-arm64
+      - task: build-checksums
+
+  build-linux-amd64:
+    desc: Build for Linux AMD64
+    cmd: >-
+      CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+      go build -ldflags "{{.LDFLAGS}}" -o dist/clancy-linux-amd64 ./cmd/clancy/.
+
+  build-linux-arm64:
+    desc: Build for Linux ARM64
+    cmd: >-
+      CGO_ENABLED=0 GOOS=linux GOARCH=arm64
+      go build -ldflags "{{.LDFLAGS}}" -o dist/clancy-linux-arm64 ./cmd/clancy/.
+
+  build-darwin-amd64:
+    desc: Build for macOS AMD64
+    cmd: >-
+      CGO_ENABLED=0 GOOS=darwin GOARCH=amd64
+      go build -ldflags "{{.LDFLAGS}}" -o dist/clancy-darwin-amd64 ./cmd/clancy/.
+
+  build-darwin-arm64:
+    desc: Build for macOS ARM64 (Apple Silicon)
+    cmd: >-
+      CGO_ENABLED=0 GOOS=darwin GOARCH=arm64
+      go build -ldflags "{{.LDFLAGS}}" -o dist/clancy-darwin-arm64 ./cmd/clancy/.
+
+  build-windows-amd64:
+    desc: Build for Windows AMD64
+    cmd: >-
+      CGO_ENABLED=0 GOOS=windows GOARCH=amd64
+      go build -ldflags "{{.LDFLAGS}}" -o dist/clancy-windows-amd64.exe ./cmd/clancy/.
+
+  build-windows-arm64:
+    desc: Build for Windows ARM64
+    cmd: >-
+      CGO_ENABLED=0 GOOS=windows GOARCH=arm64
+      go build -ldflags "{{.LDFLAGS}}" -o dist/clancy-windows-arm64.exe ./cmd/clancy/.
+
+  build-checksums:
+    desc: Generate checksums for all binaries in dist/
+    cmd: cd dist && sha256sum clancy-* > checksums.txt
+
+  clean:
+    desc: Remove build artifacts
+    cmd: rm -rf dist/

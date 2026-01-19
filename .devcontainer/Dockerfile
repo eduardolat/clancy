@@ -8,12 +8,10 @@ ARG TARGETPLATFORM
 ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN set -e && \
-    # Add goreleaser repo
-    echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' > /etc/apt/sources.list.d/goreleaser.list && \
     # Update and install system dependencies
     apt-get update -qq && \
     apt-get install -y -qq --no-install-recommends \
-        wget curl zip unzip p7zip-full git tree goreleaser && \
+        wget curl zip unzip p7zip-full git tree && \
     # Install downloadable binaries in a temporary directory
     mkdir -p /tmp/bin-downloads && cd /tmp/bin-downloads && \
     if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \

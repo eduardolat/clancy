@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+# Usage:
+# curl -sfL https://raw.githubusercontent.com/eduardolat/clancy/main/install.sh | sh
+
 # Dependency Check
 # Verify availability of essential tools before proceeding
 DEPS="curl uname mktemp mv chmod"
